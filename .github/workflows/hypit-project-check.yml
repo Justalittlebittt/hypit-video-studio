@@ -1,0 +1,78 @@
+name: Hypit potato chip advertisement graph check
+
+on:
+  pull_request:
+    paths:
+      - projects/chip-ad-001/**
+      - .github/workflows/hypit-project-check.yml
+  push:
+    branches: [main]
+    paths:
+      - projects/chip-ad-001/**
+      - .github/workflows/hypit-project-check.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-and-plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: projects/chip-ad-001
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install official Hypit 0.3.2
+        run: npm install --global @hypit/hypit@0.3.2 --no-audit --no-fund
+
+      - name: Inspect package version
+        run: |
+          mkdir -p diagnostics
+          hypit version | tee diagnostics/version.log
+
+      - name: Compile Author source only (no generation)
+        run: |
+          set -o pipefail
+          hypit check author.svml 2>&1 | tee diagnostics/check.log
+
+      - name: Plan two critical shots (no generation)
+        run: |
+          set -o pipefail
+          hypit plan two-takes.svrun 2>&1 | tee diagnostics/plan-two.log
+
+      - name: Plan all seven video resources (no generation)
+        run: |
+          set -o pipefail
+          hypit plan seven-takes.svrun 2>&1 | tee diagnostics/plan-seven.log
+
+      - name: Summarize outcome
+        if: always()
+        run: |
+          echo "## Hypit chip-ad graph validation" >> "$GITHUB_STEP_SUMMARY"
+          echo "This job does not use paid media models or call hypit build." >> "$GITHUB_STEP_SUMMARY"
+          for item in version check plan-two plan-seven; do
+            if [ -f "diagnostics/$item.log" ]; then
+              echo "### $item" >> "$GITHUB_STEP_SUMMARY"
+              echo '```' >> "$GITHUB_STEP_SUMMARY"
+              tail -50 "diagnostics/$item.log" >> "$GITHUB_STEP_SUMMARY"
+              echo '```' >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+
+      - name: Upload graph diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chip-ad-graph-diagnostics
+          path: projects/chip-ad-001/diagnostics/
+          if-no-files-found: warn
