@@ -1,0 +1,9 @@
+{
+  "name": "hypit-chip-ad-001",
+  "version": "0.1.0",
+  "private": true,
+  "hypit": {
+    "project": true
+  },
+  "description": "Seven independent generative takes for the 29s absurd-comedy potato-chip advertisement. Graph-only checks; no paid generation."
+}

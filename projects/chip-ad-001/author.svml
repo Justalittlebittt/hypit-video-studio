@@ -1,0 +1,110 @@
+<?svml using="@hypit/markup@1"?>
+<svml>
+  <import as="text" from="@hypit/text@1"/>
+  <import as="seedance" from="@hypit/seedance@1"/>
+  <import as="recipes" source="./recipes.svs"/>
+
+  <!-- All shots share a 9:16 photoreal absurd-comedy advertisement style.
+       Generation tasks are declared but NOT executed by check or plan.
+       Shot durations S03/S07 are 4s for model compatibility and are intended
+       to be trimmed to 3s when the complete 29s film is assembled. -->
+
+  <text:Value id="s01-prompt">
+    Vertical 9:16 photorealistic cinematic comedy advertisement, 4s.
+    Cool blue moonlight inside a quiet modern bedroom at midnight. Adult East Asian
+    man, short black hair, charcoal gray T-shirt, sitting in bed. He checks whether
+    his wife is asleep, then discreetly opens a plain unbranded golden potato-chip
+    packet; anxious guilty expression, audible tiny wrapper rustle only.
+    Keep the male lead and bedroom consistent with takes S02 S04 S06.
+    Restrained acting, no readable lettering, no dialogue, no music.
+  </text:Value>
+
+  <text:Value id="s02-prompt">
+    Vertical 9:16 photorealistic extreme macro close-up, 4s, same midnight
+    bedroom with cool blue moonlight and same East Asian man in gray T-shirt.
+    Only his lower face, fingertips and one thin curved golden potato chip are
+    prominent. For the first 2 seconds he slowly brings it near his mouth,
+    nervously hesitating. Near the final second he bites ONE chip exactly ONCE:
+    thin porous potato material fractures at the teeth with realistic golden
+    crumbs and one exceptionally crisp sharp crack. A single fracture, no
+    second bite, no dialogue, no music, no text, no unnatural teeth.
+    Crunch audio to be added at global time 7.5s during final assembly.
+  </text:Value>
+
+  <text:Value id="s03-prompt">
+    Vertical 9:16 photorealistic absurd-comedy reaction shot, 4s generated
+    for an intended 3s edit. Hard cut to a totally different bedroom on the
+    far side of Earth. A different adult man sleeping under a blanket suddenly
+    jerks upright, startled by an impossible distant crunch, looks around in
+    disbelief, then freezes. Realistic bedroom lighting and fabric.
+    He is NOT the chip-eating protagonist. No visible chip, captions, music
+    or speech. The sound bridge is added separately.
+  </text:Value>
+
+  <text:Value id="s04-prompt">
+    Vertical 9:16 photorealistic cinematic comedy close-up, 4s.
+    Return to exactly the same moonlit bedroom, East Asian short-haired man,
+    gray T-shirt, unbranded golden chip packet as in S01 and S02.
+    He smirks, unaware of the chaos, picks up another thin golden chip, and
+    slowly delivers ONE second bite with clear physical chip fracture.
+    The crisp second crack will occur at global time 14.4s in post.
+    No third bite, no music, no words, no text.
+  </text:Value>
+
+  <text:Value id="s05-prompt">
+    Vertical 9:16 photorealistic lunar science-fiction absurd comedy, 5s.
+    Realistic gray moon surface with fine dust, utterly black sky, small
+    distant lunar lander and Earth visible above the horizon. One astronaut
+    in white EVA suit, opaque mirrored visor, stands in three-quarter profile.
+    At the opening, hearing an impossible crisp potato-chip crack from Earth,
+    he sharply turns his helmet and shoulders toward Earth; a brief beat of
+    stunned silence; he lifts a gloved hand and points toward the distant Earth.
+    Low-gravity body inertia, believable suit materials, controlled camera
+    move into a medium close-up. Radio line in Mandarin will be added in post:
+    谁在吃东西？. No model-spoken dialogue, on-screen text, explosions or music.
+  </text:Value>
+
+  <text:Value id="s06-prompt">
+    Vertical 9:16 cinematic photorealistic comedy, 6s.
+    Same adult East Asian man, short black hair, charcoal gray T-shirt and
+    same blue-lit bedroom as S01 S02 S04. He goes rigid with an uneaten chip
+    between his fingers. His wife wearing dark pajamas stands directly behind
+    him, unimpressed. Slow reveal of her deadpan expression, his guilty
+    wide-eyed reaction. No overt confrontation or shouting, no logos.
+    Her line will be added later in Mandarin voice-over:
+    你是不是又偷吃那个特别脆的？. Do not generate speech or music.
+  </text:Value>
+
+  <text:Value id="s07-prompt">
+    Vertical 9:16 commercial product macro hero shot, 4s generated
+    for an intended 3s edit. One thin golden ridged potato chip rotates
+    gently in a dramatically lit black and gold studio. Small golden crumbs
+    float and settle as a simple unbranded golden chip packet enters frame.
+    Heroic premium crisp texture, light sparkling highlights, background
+    almost black. No logo, no gibberish text, no overlay, no speech, no music.
+    Final Chinese tagline will be composited later:
+    脆到连月球都听得见。
+  </text:Value>
+
+  <seedance:TextVideo id="s01-take" model="mini" prompt={s01-prompt}
+    duration="4" resolution="720p" aspect-ratio="9:16"
+    generate-audio="false" web-search="false"/>
+  <seedance:TextVideo id="s02-take" model="mini" prompt={s02-prompt}
+    duration="4" resolution="720p" aspect-ratio="9:16"
+    generate-audio="false" web-search="false"/>
+  <seedance:TextVideo id="s03-take" model="mini" prompt={s03-prompt}
+    duration="4" resolution="720p" aspect-ratio="9:16"
+    generate-audio="false" web-search="false"/>
+  <seedance:TextVideo id="s04-take" model="mini" prompt={s04-prompt}
+    duration="4" resolution="720p" aspect-ratio="9:16"
+    generate-audio="false" web-search="false"/>
+  <seedance:TextVideo id="s05-take" model="mini" prompt={s05-prompt}
+    duration="5" resolution="720p" aspect-ratio="9:16"
+    generate-audio="false" web-search="false"/>
+  <seedance:TextVideo id="s06-take" model="mini" prompt={s06-prompt}
+    duration="6" resolution="720p" aspect-ratio="9:16"
+    generate-audio="false" web-search="false"/>
+  <seedance:TextVideo id="s07-take" model="mini" prompt={s07-prompt}
+    duration="4" resolution="720p" aspect-ratio="9:16"
+    generate-audio="false" web-search="false"/>
+</svml>

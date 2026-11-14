@@ -1,0 +1,4 @@
+.hypit/
+output/
+node_modules/
+*.log
