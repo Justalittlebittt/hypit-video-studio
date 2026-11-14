@@ -5,6 +5,7 @@ on:
       - projects/chip-ad-001/render-smoke.svml
       - projects/chip-ad-001/render-smoke.svrun
       - projects/chip-ad-001/hypit.runtime.json
+      - projects/chip-ad-001/recipes.svs
       - .github/workflows/hypit-render-smoke.yml
   workflow_dispatch:
 
@@ -23,8 +24,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install Hypit
-        run: npm install -g @hypit/hypit@0.3.2 --no-audit --no-fund
+      - name: Install Hypit and font
+        run: |
+          npm install -g @hypit/hypit@0.3.2 --no-audit --no-fund
+          npm install --no-save @fontsource-variable/inter --no-audit --no-fund
       - name: Check source and render plan (no media model)
         run: |
           set -o pipefail
