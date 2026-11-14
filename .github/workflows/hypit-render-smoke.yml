@@ -1,0 +1,40 @@
+name: Hypit free local rendering smoke test
+on:
+  pull_request:
+    paths:
+      - projects/chip-ad-001/render-smoke.svml
+      - projects/chip-ad-001/render-smoke.svrun
+      - projects/chip-ad-001/hypit.runtime.json
+      - .github/workflows/hypit-render-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: projects/chip-ad-001
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Hypit
+        run: npm install -g @hypit/hypit@0.3.2 --no-audit --no-fund
+      - name: Check source and render plan (no media model)
+        run: |
+          set -o pipefail
+          mkdir -p diagnostics
+          hypit check render-smoke.svml 2>&1 | tee diagnostics/render-check.log
+          hypit plan render-smoke.svrun 2>&1 | tee diagnostics/render-plan.log
+      - name: Upload diagnostic logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hypit-free-render-plan
+          path: projects/chip-ad-001/diagnostics
+          if-no-files-found: warn
