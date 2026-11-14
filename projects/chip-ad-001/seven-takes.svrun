@@ -1,0 +1,11 @@
+<?svml using="@hypit/markup/run@1"?>
+<svrun version="1">
+  <author source="./author.svml"/>
+  <target output="s01-take.video"/>
+  <target output="s02-take.video"/>
+  <target output="s03-take.video"/>
+  <target output="s04-take.video"/>
+  <target output="s05-take.video"/>
+  <target output="s06-take.video"/>
+  <target output="s07-take.video"/>
+</svrun>
