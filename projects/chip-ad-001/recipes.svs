@@ -1,0 +1,7 @@
+<?svml using="@hypit/recipe@1"?>
+<sheet version="1" id="chip-ad">
+  /* For the future final 9:16 film. Two-take preview currently targets video only. */
+  film.vertical {
+    background: #080D18;
+  }
+</sheet>
