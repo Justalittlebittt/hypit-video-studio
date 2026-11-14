@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - .github/workflows/hypit-smoke.yml
+  pull_request:
+    paths:
+      - .github/workflows/hypit-smoke.yml
   workflow_dispatch:
 
 permissions:
