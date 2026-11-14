@@ -1,0 +1,66 @@
+name: Hypit CLI installation smoke test
+
+on:
+  push:
+    paths:
+      - .github/workflows/hypit-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install-and-verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Inspect runner
+        run: |
+          mkdir -p logs
+          uname -a | tee logs/environment.txt
+          node --version | tee -a logs/environment.txt
+          npm --version | tee -a logs/environment.txt
+          command -v ffmpeg | tee -a logs/environment.txt || true
+
+      - name: Install Hypit CLI v0.3.2
+        shell: bash
+        run: |
+          set -o pipefail
+          npm install --global @hypit/hypit@0.3.2 --no-audit --no-fund 2>&1 | tee logs/install.txt
+
+      - name: Verify Hypit commands
+        shell: bash
+        run: |
+          set -o pipefail
+          command -v hypit | tee logs/executable.txt
+          hypit version 2>&1 | tee logs/version.txt
+          hypit --help 2>&1 | tee logs/help.txt
+
+      - name: Summarize
+        if: always()
+        run: |
+          echo "## Hypit installation smoke test" >> "$GITHUB_STEP_SUMMARY"
+          echo "Node: 22; Hypit: 0.3.2; no video API calls." >> "$GITHUB_STEP_SUMMARY"
+          if [ -f logs/version.txt ]; then
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            cat logs/version.txt >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Installation or version validation did not complete; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload diagnostic logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hypit-install-diagnostics
+          path: logs/
+          if-no-files-found: warn
