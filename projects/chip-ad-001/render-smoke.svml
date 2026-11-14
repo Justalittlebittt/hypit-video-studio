@@ -1,0 +1,17 @@
+<?svml using="@hypit/markup@1"?>
+<svml>
+  <import as="time" from="@hypit/timeline-author@1"/>
+  <import as="spatial" from="@hypit/spatial@1"/>
+  <import as="film" from="@hypit/film@1"/>
+  <import as="html" from="@hypit/html-video@1"/>
+  <import as="style" source="./recipes.svs"/>
+
+  <!-- Zero-media test: prove Hypit's local HTML renderer can encode a 3s vertical MP4.
+       This plain background is NOT footage for the advertising final. -->
+  <time:Clock id="clock" frame-rate="24"/>
+  <time:Timeline id="timeline" clock={clock} end="3s"/>
+  <spatial:Canvas id="canvas" width="360" height="640"/>
+  <film:Film id="test-film" canvas={canvas.canvas} timeline={timeline.timeline}
+    appearance={style.film.vertical}/>
+  <html:Video id="final" composition={test-film.composition} timeline={timeline.timeline}/>
+</svml>
